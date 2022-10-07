@@ -1,6 +1,7 @@
 import Point from "./point";
 
 abstract class Shape {
+    // fields of Shape class
     protected color: string;
     protected filled: boolean;
     protected points: Point[];
@@ -19,6 +20,7 @@ abstract class Shape {
         return this.points.length < 3 ? "line": "shape";
     }
 
+    // method that converts array of Point instances to string
     protected pointsArrayToString(): string {
         return this.points.map(point => point.toString()).join(', ')
     }
@@ -41,6 +43,8 @@ abstract class Shape {
             }
             distancesBetweenPoints.push(distance);
         }
+
+        // array if distances ( used to calculate type of figure)
         this.distancesBetweenPoints = distancesBetweenPoints;
         return  distancesBetweenPoints.reduce((previousValue, currentValue)=>currentValue+previousValue,0)
     }

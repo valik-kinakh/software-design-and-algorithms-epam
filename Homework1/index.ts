@@ -7,6 +7,8 @@ const point2 = new Point(0,0);
 
 const triangle = new Triangle([point,point1,point2]);
 
+
+// example of using Triangle class
 console.log(`
 ${triangle.toString()}
 Perimeter: ${triangle.getPerimeter()}

@@ -1,4 +1,5 @@
 class Point {
+    // fields of Point class
     x: number;
     y: number;
 
@@ -11,6 +12,7 @@ class Point {
         this.y = y | 0
     }
 
+    // calculates distance between 2 points
     private calculateDistance(x1: number, y1: number, x2: number, y2: number):number {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     };
@@ -19,10 +21,12 @@ class Point {
         return `(${this.x}, ${this.y})`
     }
 
+    // overloaded distance method
     public distance();
     public distance(x: Point);
     public distance(x: number, y: number);
 
+    // distance method implementation
     public distance(x?: Point | number, y?: number): number {
         let result;
         if (!x && !y) {
