@@ -11,13 +11,16 @@ abstract class Shape {
     protected constructor(points: Point[]);
     protected constructor(points: Point[], color: string, filled: boolean);
     protected constructor(points: Point[], color?: string, filled?: boolean) {
+        if (points.length < 3){
+            throw new Error("Al least 3 point")
+        }
         this.points = points;
         this.color = color || "green";
-        this.filled = filled || true;
+        this.filled = filled === undefined ? true : filled;
     }
 
     getType(): string {
-        return this.points.length < 3 ? "line": "shape";
+        return "shape";
     }
 
     // method that converts array of Point instances to string
@@ -27,7 +30,7 @@ abstract class Shape {
 
     toString(): string {
         const pointsString = this.pointsArrayToString();
-        return `A Shape with color of ${this.color} and ${this.filled}. Points: ${pointsString}.`
+        return `A Shape with color of ${this.color} and ${this.filled ? "filled" : "not filled"}. Points: ${pointsString}.`
     }
 
     getPerimeter(): number{
