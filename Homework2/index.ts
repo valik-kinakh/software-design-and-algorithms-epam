@@ -2,7 +2,7 @@
 import {Item} from "./classes/Item";
 import {ItemWeightComparator} from "./classes/ItemWeightComparator";
 import {Sword} from "./classes/Sword";
-import {Bow} from "./classes/Bow";
+import {Inventory} from "./classes/Inventory";
 
 const inventory: Inventory = new Inventory();
 
