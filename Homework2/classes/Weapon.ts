@@ -10,7 +10,8 @@ export abstract class Weapon extends Item {
     protected effectiveDamage: number = this.baseDamage * this.damageModifier;
     protected baseDurability: number = 0;
     protected durabilityModifier: number = 1.05;
-    protected effectiveDurability = this.baseDurability * this.durabilityModifier;
+    protected effectiveDurability = this.baseDurability * this.durabilityModifier > 1 ?
+        1 : this.baseDurability * this.durabilityModifier;
 
     // constructor
     protected constructor(name: string, baseDamage: number, baseDurability: number, value: number, weight: number) {
@@ -39,13 +40,13 @@ export abstract class Weapon extends Item {
     public use(): string {
         let breakDownMessage: string = "";
 
-        if (this.effectiveDurability <= 0){
+        if (this.effectiveDurability <= 0) {
             breakDownMessage = ` The ${this.name} breaks.`
-        }else {
+        } else {
             this.effectiveDurability -= Weapon.MODIFIER_CHANGE_RATE;
         }
 
-        if (this.name === "Hammer" && breakDownMessage){
+        if (this.name === "Hammer" && breakDownMessage) {
             return "You can't use the hammer, it is broken.";
         }
 

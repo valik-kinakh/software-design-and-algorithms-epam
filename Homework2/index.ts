@@ -1,6 +1,8 @@
 // Create the inventory
 import {Item} from "./classes/Item";
 import {ItemWeightComparator} from "./classes/ItemWeightComparator";
+import {Sword} from "./classes/Sword";
+import {Bow} from "./classes/Bow";
 
 const inventory: Inventory = new Inventory();
 

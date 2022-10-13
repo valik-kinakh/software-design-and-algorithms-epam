@@ -2,7 +2,7 @@
 
 import {Weapon} from "./Weapon";
 
-class Sword extends Weapon{
+export class Sword extends Weapon{
 
     // constructor
     constructor(baseDamage: number, baseDurability: number, value: number, weight: number) {
