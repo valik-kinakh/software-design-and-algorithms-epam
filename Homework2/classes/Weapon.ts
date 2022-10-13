@@ -6,11 +6,11 @@ export abstract class Weapon extends Item {
     protected static MODIFIER_CHANGE_RATE = 0.05;
 
     protected baseDamage: number = 0;
-    protected damageModifier: number = 0.05;
-    protected effectiveDamage: number = this.baseDamage + this.damageModifier;
+    protected damageModifier: number = 1.05;
+    protected effectiveDamage: number = this.baseDamage * this.damageModifier;
     protected baseDurability: number = 0;
-    protected durabilityModifier: number = 0.05;
-    protected effectiveDurability = this.baseDurability + this.durabilityModifier;
+    protected durabilityModifier: number = 1.05;
+    protected effectiveDurability = this.baseDurability * this.durabilityModifier;
 
     // constructor
     protected constructor(name: string, baseDamage: number, baseDurability: number, value: number, weight: number) {

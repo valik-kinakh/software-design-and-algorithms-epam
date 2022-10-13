@@ -1,4 +1,7 @@
 // Create the inventory
+import {Item} from "./classes/Item";
+import {ItemWeightComparator} from "./classes/ItemWeightComparator";
+
 const inventory: Inventory = new Inventory();
 
 // Create a set of items
