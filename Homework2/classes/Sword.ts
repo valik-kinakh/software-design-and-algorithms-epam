@@ -11,6 +11,7 @@ export class Sword extends Weapon{
 
     polish():void {
        if (this.damageModifier < 1.25) this.damageModifier += Sword.MODIFIER_CHANGE_RATE;
+       this.setDamage();
     }
 
 }

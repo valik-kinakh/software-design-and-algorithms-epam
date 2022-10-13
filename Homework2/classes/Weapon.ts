@@ -5,13 +5,12 @@ import {Item} from "./Item";
 export abstract class Weapon extends Item {
     protected static MODIFIER_CHANGE_RATE = 0.05;
 
-    protected baseDamage: number = 0;
+    protected baseDamage: number;
     protected damageModifier: number = 1.05;
-    protected effectiveDamage: number = this.baseDamage * this.damageModifier;
-    protected baseDurability: number = 0;
+    protected effectiveDamage: number;
+    protected baseDurability: number;
     protected durabilityModifier: number = 1.05;
-    protected effectiveDurability = this.baseDurability * this.durabilityModifier > 1 ?
-        1 : this.baseDurability * this.durabilityModifier;
+    protected effectiveDurability: number;
 
     // constructor
     protected constructor(name: string, baseDamage: number, baseDurability: number, value: number, weight: number) {
@@ -19,6 +18,19 @@ export abstract class Weapon extends Item {
 
         this.baseDamage = baseDamage;
         this.baseDurability = baseDurability;
+
+        this.setDamage();
+        this.setDurability();
+    }
+
+    //setters
+    protected setDurability(): void{
+        this.effectiveDurability = this.baseDurability * this.durabilityModifier > 1 ?
+            1 : this.baseDurability * this.durabilityModifier;
+    }
+
+    protected setDamage(): void{
+        this.effectiveDamage = this.baseDamage * this.damageModifier;
     }
 
     //getters
