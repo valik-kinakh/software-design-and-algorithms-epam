@@ -3,6 +3,7 @@ import {Item} from "./classes/Item";
 import {ItemWeightComparator} from "./classes/ItemWeightComparator";
 import {Sword} from "./classes/Sword";
 import {Inventory} from "./classes/Inventory";
+import {Pizza} from "./classes/Pizza";
 
 const inventory: Inventory = new Inventory();
 
