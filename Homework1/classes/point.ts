@@ -8,8 +8,8 @@ class Point {
     // // parameterized constructor
     constructor(x: number, y: number);
     constructor(x?: number, y?: number) {
-        this.x = x | 0;
-        this.y = y | 0
+        this.x = x || 0;
+        this.y = y || 0
     }
 
     // calculates distance between 2 points
