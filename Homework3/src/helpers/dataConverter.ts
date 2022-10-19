@@ -10,7 +10,7 @@ const convertUserInfo = (user: User) => {
 };
 
 const convertAccountInfo = (account: Account) => {
-  const lastPayment = account.payments[account.payments.length - 1];
+  const lastPayment = account.payments[0];
   const totalSum = lastPayment?.totalSum ?? 0;
   return {
     lastPayments: totalSum,
