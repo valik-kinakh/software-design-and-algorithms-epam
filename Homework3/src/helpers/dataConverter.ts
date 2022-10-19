@@ -10,10 +10,8 @@ const convertUserInfo = (user: User) => {
 };
 
 const convertAccountInfo = (account: Account) => {
-  const totalSum = account.payments.reduce(
-    (previousValue, currentValue) => previousValue + currentValue.totalSum,
-    0
-  );
+  const lastPayment = account.payments.pop();
+  const totalSum = lastPayment?.totalSum ?? 0;
   return {
     lastPayments: totalSum,
     posts: account.posts,
