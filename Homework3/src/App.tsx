@@ -13,8 +13,19 @@ import dataConverter from './helpers/dataConverter';
 // mockedData has to be replaced with parsed Promises’ data
 // const mockedData: Row[] = rows.data;
 
+interface Store {
+  selectedFilter: string[];
+  sort: string;
+  searchedValue: string;
+}
+
 export const App: FC = () => {
-  const [data, setData] = useState<Row[]>(undefined);
+  const [data, setData] = useState<Row[]>([]);
+  const [store, updateStore] = useState<Store>({
+    selectedFilter: [],
+    sort: 'desc',
+    searchedValue: '',
+  });
 
   useEffect(() => {
     // fetching data from API
@@ -26,15 +37,19 @@ export const App: FC = () => {
     );
   }, []);
 
+  useEffect(() => {
+    console.log(store);
+  }, [store]);
+
   return (
     <StyledEngineProvider injectFirst>
       <div className="App">
         <div className={styles.container}>
           <div className={styles.sortFilterContainer}>
-            <Filters />
-            <Sort />
+            <Filters updateStore={updateStore} />
+            <Sort updateStore={updateStore} />
           </div>
-          <Search />
+          <Search updateStore={updateStore} />
         </div>
         {data && <Table rows={data} />}
       </div>

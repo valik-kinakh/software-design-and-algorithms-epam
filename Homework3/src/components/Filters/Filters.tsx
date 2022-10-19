@@ -1,4 +1,4 @@
-import { useState, FC } from 'react';
+import { useState, FC, useEffect } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 
 import styles from './Filters.module.scss';
@@ -26,8 +26,15 @@ const OPTIONS = [
   },
 ];
 
-export const Filters: FC<FiltersProps> = props => {
+export const Filters: FC<FiltersProps> = ({ updateStore }) => {
   const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
+
+  useEffect(() => {
+    updateStore(prevValue => ({
+      ...prevValue,
+      selectedFilter,
+    }));
+  }, [selectedFilter]);
 
   const onChange = ({ title }) => {
     console.log(title); // for debugging
