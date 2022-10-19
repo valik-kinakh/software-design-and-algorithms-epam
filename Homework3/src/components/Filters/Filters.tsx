@@ -20,14 +20,16 @@ interface FiltersProps {
 const OPTIONS = [
   {
     title: 'Without posts',
+    value: 1,
   },
   {
     title: 'More than 100 posts',
+    value: 100,
   },
 ];
 
 export const Filters: FC<FiltersProps> = ({ updateStore }) => {
-  const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
+  const [selectedFilter, setSelectedFilter] = useState<number[]>([]);
 
   useEffect(() => {
     updateStore(prevValue => ({
@@ -36,15 +38,15 @@ export const Filters: FC<FiltersProps> = ({ updateStore }) => {
     }));
   }, [selectedFilter]);
 
-  const onChange = ({ title }) => {
-    console.log(title); // for debugging
+  const onChange = ({ title, value }) => {
+    console.log(value); // for debugging
 
     let updatedFilters;
 
-    if (selectedFilter.find(filter => filter === title)) {
-      updatedFilters = selectedFilter.filter(filter => filter !== title);
+    if (selectedFilter.find(filter => filter === value)) {
+      updatedFilters = selectedFilter.filter(filter => filter !== value);
     } else {
-      updatedFilters = [...selectedFilter, title];
+      updatedFilters = [...selectedFilter, value];
     }
 
     setSelectedFilter(updatedFilters);
@@ -56,13 +58,13 @@ export const Filters: FC<FiltersProps> = ({ updateStore }) => {
       <ul className={styles.list}>
         {OPTIONS.map(option => (
           <li
-            value={option.title}
-            key={option.title}
+            value={option.value}
+            key={option.value}
             onClick={() => onChange(option)}
           >
             <Checkbox
-              checked={!!selectedFilter.find(filter => filter === option.title)}
-              value={option.title}
+              checked={!!selectedFilter.find(filter => filter === option.value)}
+              value={option.value}
               size="small"
               color="primary"
               onChange={() => onChange(option)}

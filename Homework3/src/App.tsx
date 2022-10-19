@@ -9,12 +9,14 @@ import { getImages, getUsers, getAccounts } from './mocks/api';
 
 import styles from './App.module.scss';
 import dataConverter from './helpers/dataConverter';
+import filterData from './helpers/filterData';
+import sortData from './helpers/sortData';
 
 // mockedData has to be replaced with parsed Promises’ data
 // const mockedData: Row[] = rows.data;
 
-interface Store {
-  selectedFilter: string[];
+export interface Store {
+  selectedFilter: number[];
   sort: string;
   searchedValue: string;
 }
@@ -31,14 +33,17 @@ export const App: FC = () => {
     // fetching data from API
     Promise.all([getImages(), getUsers(), getAccounts()]).then(
       ([images, users, accounts]: [Image[], User[], Account[]]) => {
+        const { selectedFilter, sort, searchedValue } = store;
         const rows = dataConverter(users, accounts, images);
-        setData(rows);
+
+        if (!store.selectedFilter.length) {
+          setData(sortData(rows, sort));
+          return;
+        }
+        const filtered = filterData(selectedFilter, rows);
+        setData(sortData(filtered, sort));
       }
     );
-  }, []);
-
-  useEffect(() => {
-    console.log(store);
   }, [store]);
 
   return (
