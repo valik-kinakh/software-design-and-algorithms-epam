@@ -11,9 +11,32 @@ const selectedFilterValue = (row: Row, selectedFilter: number[]) => {
   return false;
 };
 
-const filterData = (selectedFilter: number[], data: Row[]) => {
-  const filterData = data.filter(row =>
-    selectedFilterValue(row, selectedFilter)
+const matchSearch = (row: Row, searchedValue: string) => {
+  if (!searchedValue) {
+    return false;
+  }
+
+  const { username, name, country } = row;
+  const searchedValueLower = searchedValue.toLowerCase();
+
+  return (
+    username.toLowerCase().includes(searchedValueLower) ||
+    name.toLowerCase().includes(searchedValueLower) ||
+    country.toLowerCase().includes(searchedValueLower)
+  );
+};
+
+const filterData = (
+  selectedFilter: number[],
+  data: Row[],
+  searchedValue: string,
+  withFilter: boolean = false
+) => {
+  const filterData = data.filter(
+    row =>
+      withFilter ||
+      selectedFilterValue(row, selectedFilter) ||
+      matchSearch(row, searchedValue)
   );
   return filterData;
 };
