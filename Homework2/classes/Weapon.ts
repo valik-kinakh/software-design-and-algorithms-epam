@@ -61,7 +61,8 @@ export abstract class Weapon extends Item {
     if (this.effectiveDurability <= 0) {
       breakDownMessage = ` The ${this.name} breaks.`;
     } else {
-      this.effectiveDurability -= Weapon.MODIFIER_CHANGE_RATE;
+      this.durabilityModifier -= Weapon.MODIFIER_CHANGE_RATE;
+      this.setDurability();
     }
 
     if (breakDownMessage) {
