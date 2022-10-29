@@ -1,80 +1,84 @@
-import {Comparable} from './Comparable';
+import { Comparable } from "./Comparable";
 
 let id = 0;
 let counter = 0;
 
 export abstract class Item implements Comparable<Item> {
-    protected static numberOfItems: number = counter;
+  protected static numberOfItems: number;
 
-    protected id: number;
-    protected name: string;
-    protected value: number;
-    protected weight: number;
+  protected id: number;
+  protected name: string;
+  protected value: number;
+  protected weight: number;
 
-    //constructor
-    protected constructor(name: string, value: number, weight: number) {
-        this.id = id;
-        this.name = name;
-        this.value = value;
-        this.weight = weight;
+  //constructor
+  protected constructor(name: string, value: number, weight: number) {
+    this.id = id;
+    this.name = name;
+    this.value = value;
+    this.weight = weight;
 
-        id += 1;
-        counter += 1;
-    }
+    id += 1;
+    counter += 1;
+    Item.numberOfItems = counter;
+  }
 
-    //static methods
-    public static reset():void{
-        counter = 0;
-    }
+  //static methods
+  public static reset(): void {
+    counter = 0;
+  }
 
-    //getters
-    public getId(): number{
-        return this.id;
-    }
+  //getters
+  public getId(): number {
+    return this.id;
+  }
 
-    public getValue(): number{
-        return this.value;
-    }
+  public static getNumberOfItems(): number {
+    return Item.numberOfItems;
+  }
 
-    public getName(): string{
-        return this.name;
-    }
+  public getValue(): number {
+    return this.value;
+  }
 
-    public getWeight(): number{
-        return  this.weight;
-    }
+  public getName(): string {
+    return this.name;
+  }
 
-    //setters
-    public setValue(price: number):void{
-        this.value = price;
-    }
+  public getWeight(): number {
+    return this.weight;
+  }
 
-    public setName(name: string): void{
-        this.name = name;
-    }
+  //setters
+  public setValue(price: number): void {
+    this.value = price;
+  }
 
-    public setWeight(weight: number): void{
-        this.weight = weight;
-    }
+  public setName(name: string): void {
+    this.name = name;
+  }
 
-    //methods
-    public use(): void {
-    }
+  public setWeight(weight: number): void {
+    this.weight = weight;
+  }
 
-    public compareTo(other: Item): number {
-        const thisValue = this.value;
-        const otherValue = other.getValue();
+  //methods
+  public use(): void {}
 
-        if (thisValue > otherValue) return 1;
-        else if (thisValue < otherValue) return -1;
+  public compareTo(other: Item): number {
+    const thisValue = this.value;
+    const otherValue = other.getValue();
 
-        const thisName = this.name.toLowerCase();
-        const otherName = this.getName().toLowerCase();
+    if (thisValue > otherValue) return 1;
+    else if (thisValue < otherValue) return -1;
 
-        return  thisName.localeCompare(otherName);
-    }
+    const thisName = this.name.toLowerCase();
+    const otherName = this.getName().toLowerCase();
 
-    public toString(){
-        return `${this.name} - Value: ${this.value}, Weight: ${this.weight}`
-    }
+    return thisName.localeCompare(otherName);
+  }
+
+  public toString() {
+    return `${this.name} - Value: ${this.value}, Weight: ${this.weight}`;
+  }
 }
