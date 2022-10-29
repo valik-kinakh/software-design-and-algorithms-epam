@@ -36,17 +36,12 @@ export const App: FC = () => {
         const { selectedFilter, sort, searchedValue } = store;
         const rows = dataConverter(users, accounts, images);
 
-        if (!store.selectedFilter.length) {
-          const filtered = filterData(
-            selectedFilter,
-            rows,
-            searchedValue,
-            true
-          );
-          setData(sortData(filtered, sort));
-          return;
-        }
-        const filtered = filterData(selectedFilter, rows, searchedValue);
+        const filtered = filterData(
+          selectedFilter,
+          rows,
+          searchedValue,
+          !store.selectedFilter.length
+        );
         setData(sortData(filtered, sort));
       }
     );
