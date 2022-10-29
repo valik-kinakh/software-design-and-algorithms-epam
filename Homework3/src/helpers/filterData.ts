@@ -34,9 +34,9 @@ const filterData = (
 ) => {
   const filterData = data.filter(
     row =>
-      withFilter ||
       selectedFilterValue(row, selectedFilter) ||
-      matchSearch(row, searchedValue)
+      matchSearch(row, searchedValue) ||
+      withFilter
   );
   return filterData;
 };

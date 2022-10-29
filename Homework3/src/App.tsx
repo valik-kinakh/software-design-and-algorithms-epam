@@ -11,6 +11,7 @@ import styles from './App.module.scss';
 import dataConverter from './helpers/dataConverter';
 import filterData from './helpers/filterData';
 import sortData from './helpers/sortData';
+import isFiltersApplied from './helpers/isFiltersApplied';
 
 // mockedData has to be replaced with parsed Promises’ data
 // const mockedData: Row[] = rows.data;
@@ -35,12 +36,13 @@ export const App: FC = () => {
       ([images, users, accounts]: [Image[], User[], Account[]]) => {
         const { selectedFilter, sort, searchedValue } = store;
         const rows = dataConverter(users, accounts, images);
+        const withFilter = isFiltersApplied(store);
 
         const filtered = filterData(
           selectedFilter,
           rows,
           searchedValue,
-          !store.selectedFilter.length
+          withFilter
         );
         setData(sortData(filtered, sort));
       }
