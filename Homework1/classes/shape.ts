@@ -16,7 +16,7 @@ abstract class Shape {
         }
         this.points = points;
         this.color = color || "green";
-        this.filled = filled === undefined ? true : filled;
+        this.filled = filled ?? true;
     }
 
     getType(): string {
@@ -33,23 +33,23 @@ abstract class Shape {
         return `A Shape with color of ${this.color} and ${this.filled ? "filled" : "not filled"}. Points: ${pointsString}.`
     }
 
-    getPerimeter(): number{
+    calculateDistancesBetweenPoints(){
         const distancesBetweenPoints:number[] = [];
         const points = this.points;
 
         for (let i = 0; i < points.length; i++) {
-            let distance:number;
-            if (i === points.length - 1){
-                distance = points[i].distance(points[0]);
-            }else {
-                distance = points[i].distance(points[i+1]);
-            }
+            const nextPoint = i === points.length - 1 ? 0 : i + 1;
+            const distance = points[i].distance(points[nextPoint])
             distancesBetweenPoints.push(distance);
         }
 
         // array if distances ( used to calculate type of figure)
         this.distancesBetweenPoints = distancesBetweenPoints;
-        return  distancesBetweenPoints.reduce((previousValue, currentValue)=>currentValue+previousValue,0)
+    }
+
+    getPerimeter(): number{
+        this.calculateDistancesBetweenPoints();
+        return  this.distancesBetweenPoints.reduce((previousValue, currentValue)=>currentValue+previousValue,0)
     }
 }
 
