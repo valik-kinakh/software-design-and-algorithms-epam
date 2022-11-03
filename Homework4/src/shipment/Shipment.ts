@@ -16,8 +16,8 @@ export class Shipment {
     this.weight = options.weight;
     this.fromAddress = options.fromAddress;
     this.toAddress = options.toAddress;
-    this.fromZipCode = options.fromZipCode;
-    this.toZipCode = options.toZipCode;
+    this.fromZipCode = this.checkZipCode(options.fromZipCode);
+    this.toZipCode = this.checkZipCode(options.toZipCode);
 
     this.setShippingStrategy();
     this.price = this.shippingStrategy.getCost();
@@ -25,6 +25,12 @@ export class Shipment {
 
   private generateID(): number {
     return Number((Math.random() * 100).toFixed(0));
+  }
+
+  private checkZipCode(zipCode: string) {
+    if (zipCode.length > 5) throw new Error("Invalid zipcode");
+
+    return zipCode;
   }
 
   private setShippingStrategy(): void {
@@ -59,13 +65,13 @@ export class Shipment {
   }
 
   public setFromZipCode(value: string) {
-    this.fromZipCode = value;
+    this.fromZipCode = this.checkZipCode(value);
 
     return this;
   }
 
   public setToZipCode(value: string) {
-    this.toZipCode = value;
+    this.toZipCode = this.checkZipCode(value);
 
     return this;
   }
