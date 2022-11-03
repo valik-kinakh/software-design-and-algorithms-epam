@@ -1,10 +1,14 @@
 import { ShipOptions } from "./interfaces/ShipOptions";
+import {
+  AirEastShipper,
+  ChicagoSprintShipper,
+  PacificParcelShipper,
+  Shipper,
+} from "./shippers/Shipper";
 
 export class Shipment {
   private static shipment: Shipment;
-
-  private static readonly CENT_PER_POUND = 0.39;
-  private static readonly IS_INITIALISE_CALLED = false;
+  private static IS_INITIALISE_CALLED = false;
 
   private shipmentID: number;
   private weight: number;
@@ -13,6 +17,7 @@ export class Shipment {
   private fromZipCode: string;
   private toZipCode: string;
   private price: number;
+  private shippingStrategy: Shipper;
 
   private constructor() {
     this.shipmentID = 0;
@@ -28,13 +33,32 @@ export class Shipment {
     return Number((Math.random() * 100).toFixed(0));
   }
 
-  private toFixed(number: number): number {
-    return Number(number.toFixed(2));
-  }
-
   private static initialiseBaseInstance(): void {
     if (!Shipment.shipment) {
       Shipment.shipment = new Shipment();
+    }
+  }
+
+  private static setShippingStrategy(): void {
+    const { weight, fromZipCode } = Shipment.shipment;
+    switch (Number(fromZipCode[0])) {
+      case 1:
+      case 2:
+      case 3:
+        Shipment.shipment.shippingStrategy = new AirEastShipper(weight);
+        break;
+      case 4:
+      case 5:
+      case 6:
+        Shipment.shipment.shippingStrategy = new ChicagoSprintShipper(weight);
+        break;
+      case 7:
+      case 8:
+      case 9:
+        Shipment.shipment.shippingStrategy = new PacificParcelShipper(weight);
+        break;
+      default:
+        throw new Error("Not valid zip code");
     }
   }
 
@@ -42,6 +66,7 @@ export class Shipment {
     if (Shipment.IS_INITIALISE_CALLED) throw new Error("Error of initialising");
 
     Shipment.initialiseBaseInstance();
+    Shipment.IS_INITIALISE_CALLED = true;
 
     this.shipment.shipmentID = options.shipmentID ?? this.shipment.generateID();
     this.shipment.weight = options.weight;
@@ -49,9 +74,9 @@ export class Shipment {
     this.shipment.toAddress = options.toAddress;
     this.shipment.fromZipCode = options.fromZipCode;
     this.shipment.toZipCode = options.toZipCode;
-    this.shipment.price = this.shipment.toFixed(
-      this.shipment.weight * Shipment.CENT_PER_POUND
-    );
+
+    Shipment.setShippingStrategy();
+    this.shipment.price = this.shipment.shippingStrategy.getCost();
   }
 
   public static getInstance(): Shipment {
