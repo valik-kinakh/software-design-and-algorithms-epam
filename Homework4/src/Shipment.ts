@@ -1,10 +1,5 @@
 import { ShipOptions } from "./interfaces/ShipOptions";
-import {
-  AirEastShipper,
-  ChicagoSprintShipper,
-  PacificParcelShipper,
-  Shipper,
-} from "./shippers/Shipper";
+import { ShipperContext } from "./shippers/ShipperContext";
 
 export class Shipment {
   private static shipment: Shipment;
@@ -17,7 +12,7 @@ export class Shipment {
   private fromZipCode: string;
   private toZipCode: string;
   private price: number;
-  private shippingStrategy: Shipper;
+  private shippingStrategy: ShipperContext;
 
   private constructor() {
     this.shipmentID = 0;
@@ -41,25 +36,10 @@ export class Shipment {
 
   private static setShippingStrategy(): void {
     const { weight, fromZipCode } = Shipment.shipment;
-    switch (Number(fromZipCode[0])) {
-      case 1:
-      case 2:
-      case 3:
-        Shipment.shipment.shippingStrategy = new AirEastShipper(weight);
-        break;
-      case 4:
-      case 5:
-      case 6:
-        Shipment.shipment.shippingStrategy = new ChicagoSprintShipper(weight);
-        break;
-      case 7:
-      case 8:
-      case 9:
-        Shipment.shipment.shippingStrategy = new PacificParcelShipper(weight);
-        break;
-      default:
-        throw new Error("Not valid zip code");
-    }
+    Shipment.shipment.shippingStrategy = new ShipperContext(
+      weight,
+      fromZipCode
+    );
   }
 
   public static initialise(options: ShipOptions): void {
