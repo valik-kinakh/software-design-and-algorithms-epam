@@ -13,20 +13,22 @@ export abstract class Shipment {
   protected shippingStrategy: ShipperContext;
   protected type: ShipmentsEnum;
 
-  constructor(options: ShipOptions) {
+  protected constructor(options: ShipOptions) {
     this.shipmentID = options.shipmentID ?? this.generateID();
     this.weight = options.weight;
     this.fromAddress = options.fromAddress;
     this.toAddress = options.toAddress;
     this.fromZipCode = this.checkZipCode(options.fromZipCode);
     this.toZipCode = this.checkZipCode(options.toZipCode);
-
-    this.setShippingStrategy();
-    this.price = this.shippingStrategy.getCost();
   }
 
   protected generateID(): number {
     return Number((Math.random() * 100).toFixed(0));
+  }
+
+  protected typeConstructor(): void {
+    this.setShippingStrategy();
+    this.price = this.shippingStrategy.getCost();
   }
 
   protected checkZipCode(zipCode: string) {
@@ -80,13 +82,25 @@ export abstract class Shipment {
 }
 
 export class Package extends Shipment {
-  protected type = ShipmentsEnum.PACKAGE;
+  constructor(options) {
+    super(options);
+    this.type = ShipmentsEnum.PACKAGE;
+    this.typeConstructor();
+  }
 }
 
 export class Letter extends Shipment {
-  protected type = ShipmentsEnum.LETTER;
+  constructor(options) {
+    super(options);
+    this.type = ShipmentsEnum.LETTER;
+    this.typeConstructor();
+  }
 }
 
 export class Oversize extends Shipment {
-  protected type = ShipmentsEnum.OVERSIZED;
+  constructor(options) {
+    super(options);
+    this.type = ShipmentsEnum.OVERSIZED;
+    this.typeConstructor();
+  }
 }

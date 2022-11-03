@@ -8,7 +8,7 @@ client.createShip({
   fromZipCode: "16060",
   toAddress: new Address("NY", "New York", "Manheten").toString(),
   fromAddress: new Address("LA", "Los angelos", "Beverly hills").toString(),
-  weight: 6,
+  weight: 161,
   shipmentID: 47,
 });
 
