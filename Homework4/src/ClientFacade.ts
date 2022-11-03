@@ -1,14 +1,16 @@
-import { Shipment } from "./Shipment";
+import { Shipment } from "./shipment/Shipment";
 import { ShipOptions } from "./interfaces/ShipOptions";
 
 export class ClientFacade {
-  public createShip(options: ShipOptions) {
-    Shipment.initialise(options);
+  private shipment: Shipment;
 
-    return Shipment.getShipmentID();
+  public createShip(options: ShipOptions) {
+    this.shipment = new Shipment(options);
+
+    return this.shipment.getShipmentID();
   }
 
   public ship() {
-    return Shipment.ship();
+    return this.shipment.ship();
   }
 }
