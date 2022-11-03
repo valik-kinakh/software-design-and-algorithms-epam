@@ -1,15 +1,17 @@
 import { ShipOptions } from "../interfaces/ShipOptions";
 import { ShipperContext } from "../shippers/ShipperContext";
+import { ShipmentsEnum } from "../enums/shipmentsEnum";
 
-export class Shipment {
-  private shipmentID: number;
-  private weight: number;
-  private fromAddress: string;
-  private toAddress: string;
-  private fromZipCode: string;
-  private toZipCode: string;
-  private price: number;
-  private shippingStrategy: ShipperContext;
+export abstract class Shipment {
+  protected readonly shipmentID: number;
+  protected weight: number;
+  protected fromAddress: string;
+  protected toAddress: string;
+  protected fromZipCode: string;
+  protected toZipCode: string;
+  protected price: number;
+  protected shippingStrategy: ShipperContext;
+  protected type: ShipmentsEnum;
 
   constructor(options: ShipOptions) {
     this.shipmentID = options.shipmentID ?? this.generateID();
@@ -23,19 +25,19 @@ export class Shipment {
     this.price = this.shippingStrategy.getCost();
   }
 
-  private generateID(): number {
+  protected generateID(): number {
     return Number((Math.random() * 100).toFixed(0));
   }
 
-  private checkZipCode(zipCode: string) {
+  protected checkZipCode(zipCode: string) {
     if (zipCode.length > 5) throw new Error("Invalid zipcode");
 
     return zipCode;
   }
 
-  private setShippingStrategy(): void {
-    const { weight, fromZipCode } = this;
-    this.shippingStrategy = new ShipperContext(weight, fromZipCode);
+  protected setShippingStrategy(): void {
+    const { weight, fromZipCode, type } = this;
+    this.shippingStrategy = new ShipperContext(weight, fromZipCode, type);
   }
 
   public getInstance(): Shipment {
@@ -75,4 +77,16 @@ export class Shipment {
 
     return this;
   }
+}
+
+export class Package extends Shipment {
+  protected type = ShipmentsEnum.PACKAGE;
+}
+
+export class Letter extends Shipment {
+  protected type = ShipmentsEnum.LETTER;
+}
+
+export class Oversize extends Shipment {
+  protected type = ShipmentsEnum.OVERSIZED;
 }
