@@ -16,14 +16,20 @@ export abstract class Shipper {
   }
 
   public getCost(): number {
+    let price: number;
     switch (this.type) {
       case ShipmentsEnum.LETTER:
-        return this.weight * this.CENT_PER_POUND_LETTER;
+        price = this.weight * this.CENT_PER_POUND_LETTER;
+        break;
       case ShipmentsEnum.PACKAGE:
-        return this.weight * this.CENT_PER_POUND_PACKAGE;
+        price = this.weight * this.CENT_PER_POUND_PACKAGE;
+        break;
       case ShipmentsEnum.OVERSIZED:
-        return this.oversizedFormula();
+        price = this.oversizedFormula();
+        break;
     }
+
+    return Number(price.toFixed(2));
   }
 }
 
