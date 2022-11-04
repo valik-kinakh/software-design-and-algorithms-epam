@@ -52,7 +52,8 @@ export abstract class Shipment {
 
   public ship(): string {
     const { shipmentID, fromAddress, toAddress, price } = this;
-    return `${shipmentID}, from:${fromAddress}, to:${toAddress}, ${price}$`;
+    return `Shipment with the ID ${shipmentID} will be picked up from ${fromAddress}, and shipped to ${toAddress}
+Cost = ${price}$`;
   }
 
   //setters
