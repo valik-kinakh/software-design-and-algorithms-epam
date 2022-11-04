@@ -1,7 +1,7 @@
 import { ShipmentContext } from "../shipment/ShipmentContext";
 import { ShipmentMarks } from "../interfaces/ShipmentMarks";
 
-class ShipmentContextDecorator {
+export class ShipmentContextDecorator {
   protected shipmentContext: ShipmentContext;
   protected isFragile: boolean;
   protected notLeave: boolean;
@@ -34,6 +34,6 @@ class ShipmentContextDecorator {
 
   ship(): string {
     return `${this.shipmentContext.ship()}
-    ${this.fragileMarkMessage()}${this.notLeaveMarkMessage()}${this.returnReceiptMessage()}`;
+${this.fragileMarkMessage()}${this.notLeaveMarkMessage()}${this.returnReceiptMessage()}`;
   }
 }
