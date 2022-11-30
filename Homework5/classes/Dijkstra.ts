@@ -1,5 +1,4 @@
 import { WeightGraph } from "./WeightGraph";
-import { Vertex } from "./Vertex";
 
 interface Path {
   path: string[];
@@ -19,7 +18,7 @@ interface GraphNode {
   }[];
 }
 
-export class Dijkstra {
+export class Dijkstra implements IDijkstra<string> {
   graph: WeightGraph;
 
   constructor(graph: WeightGraph) {
@@ -95,5 +94,20 @@ export class Dijkstra {
       distance: cost,
       path: Object.values(path).map((el) => el.name),
     };
+  }
+
+  findAllShortestPaths(vertex: string): Record<string, Path> {
+    const adjacenyList = this.graph.adjacenyList;
+    const allPaths = {};
+
+    const filterVertexes = Object.keys(adjacenyList).filter(
+      (key) => key !== vertex
+    );
+
+    for (const el of filterVertexes) {
+      allPaths[el] = this.findShortestPath(vertex, el);
+    }
+
+    return allPaths;
   }
 }

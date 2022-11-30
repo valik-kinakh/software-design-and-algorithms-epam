@@ -25,4 +25,6 @@ edges.forEach((edge) => graph.addEdge(edge.from, edge.to, edge.weight));
 
 const dijkstra = new Dijkstra(graph);
 
-dijkstra.findShortestPath(vertex4.name, vertex3.name);
+console.log(dijkstra.findShortestPath(vertex4.name, vertex3.name));
+
+console.log(dijkstra.findAllShortestPaths(vertex4.name));
