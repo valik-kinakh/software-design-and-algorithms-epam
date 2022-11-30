@@ -1,9 +1,10 @@
 interface IPriorityQueue<T> {
   insert(item: T, priority: number): void;
-  peek(): T;
   pop(): T;
   size(): number;
   isEmpty(): boolean;
+
+  execute(): void;
 }
 
 export class PriorityQueue<T> implements IPriorityQueue<T> {
@@ -21,14 +22,6 @@ export class PriorityQueue<T> implements IPriorityQueue<T> {
     return this.data.length === 0;
   }
 
-  peek(): T {
-    return this.isEmpty()
-      ? null
-      : this.data.reduce((min, current) =>
-          current[0] < min[0] ? current : min
-        )[1];
-  }
-
   pop(): T {
     if (this.isEmpty()) return null;
 
@@ -42,7 +35,14 @@ export class PriorityQueue<T> implements IPriorityQueue<T> {
     });
 
     this.data.splice(minIndex, 1);
-    return min[1];
+    // @ts-ignore
+    return min[1]();
+  }
+
+  execute() {
+    while (!this.isEmpty()) {
+      this.pop();
+    }
   }
 
   size(): number {
