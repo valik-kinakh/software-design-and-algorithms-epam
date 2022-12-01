@@ -3,8 +3,6 @@ interface IPriorityQueue<T> {
   pop(): T;
   size(): number;
   isEmpty(): boolean;
-
-  execute(): void;
 }
 
 export class PriorityQueue<T> implements IPriorityQueue<T> {
@@ -37,12 +35,6 @@ export class PriorityQueue<T> implements IPriorityQueue<T> {
     this.data.splice(minIndex, 1);
     // @ts-ignore
     return min[1]();
-  }
-
-  execute() {
-    while (!this.isEmpty()) {
-      this.pop();
-    }
   }
 
   size(): number {
