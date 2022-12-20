@@ -3,26 +3,14 @@ import { priorityRandomizer } from "../index";
 
 const p = new PriorityQueue();
 
-export const TenThousand = () => {
-  for (let i = 0; i < 10000; i++) {
+export const benchmark = (number: number) => {
+  for (let i = 0; i < number; i++) {
     const priority = priorityRandomizer();
     p.insert(() => console.log(`item priority ${priority}`), priority);
   }
-  console.time("10000 elements");
-  for (let i = 0; i < 10000; i++) {
+  console.time(`${number} elements`);
+  for (let i = 0; i < number; i++) {
     p.pop();
   }
-  console.timeEnd("10000 elements");
-};
-
-export const FiftyThousand = () => {
-  for (let i = 0; i < 50000; i++) {
-    const priority = priorityRandomizer();
-    p.insert(() => console.log(`item priority ${priority}`), priority);
-  }
-  console.time("50000 elements");
-  for (let i = 0; i < 50000; i++) {
-    p.pop();
-  }
-  console.timeEnd("50000 elements");
+  console.timeEnd(`${number} elements`);
 };
